@@ -729,10 +729,7 @@ def inform_cultist(bot, game, player_number):
                         fstring += f.name + ", "
                 fstring = fstring[:-2]
                 if not debugging:
-                        bot.send_message(uid, "Tus amigos cultistas son: %s" % fstring)
-            hitler = game.get_hitler()
-            'if not debugging:
-            '           bot.send_message(uid, "Hitler is: %s" % hitler.name)
+                        bot.send_message(uid, "Tus amigos cultistas son: %s" % fstring)            
         elif role == "NoDefinido":
             if player_number <= 6:
                 fascists = game.get_fascists()
