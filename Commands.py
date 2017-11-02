@@ -458,4 +458,25 @@ def command_nein(bot, update):
 		for uid in game.playerlist:
 			game.board.state.last_votes[uid] = answer
 		MainController.count_votes(bot, game)
+		
+def command_infect(bot, update, args):
+	try:
+		#Send message of executing command   
+		cid = update.message.chat_id
+		#bot.send_message(cid, "Looking for history...")
+		#Check if there is a current game 
+		if cid in GamesController.games.keys():
+			game = GamesController.games.get(cid, None)
+			
+			if len(args) > 0:
+				bot.send_message(cid, "Se ha infectado a: " + args[0]) 
+			else:				
+				for player in game.player_sequence:
+					player.tokens_infeccion += 1							
+				bot.send_message(cid, "Todos los jugadores han sido infectados") 
+				bot.send_message(game.cid, game.board.print_board(game.playerlist))
+		else:
+			bot.send_message(cid, "No hay juego en este chat. Crea un juego con /newgame")
+	except Exception as e:
+		bot.send_message(cid, str(e))
 	
