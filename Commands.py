@@ -385,21 +385,21 @@ def save_game(cid, groupName, game):
 	#Check if game is in DB first
 	cur = conn.cursor()			
 	log.info("Searching Game in DB")
-	query = "select * from games where id = %s;"
+	query = "select * from games_xapi_bot where id = %s;"
 	cur.execute(query, [cid])
 	dbdata = cur.fetchone()
 	if cur.rowcount > 0:
 		log.info('Updating Game')
 		gamejson = jsonpickle.encode(game)
 		#query = "UPDATE games SET groupName = %s, data = %s WHERE id = %s RETURNING data;"
-		query = "UPDATE games SET groupName = %s, data = %s WHERE id = %s;"
+		query = "UPDATE games_xapi_bot SET groupName = %s, data = %s WHERE id = %s;"
 		cur.execute(query, (groupName, gamejson, cid))
 		#log.info(cur.fetchone()[0])
 		conn.commit()		
 	else:
 		log.info('Saving Game in DB')
 		gamejson = jsonpickle.encode(game)
-		query = "INSERT INTO games(id , groupName  , data) VALUES (%s, %s, %s);"
+		query = "INSERT INTO games_xapi_bot(id , groupName  , data) VALUES (%s, %s, %s);"
 		#query = "INSERT INTO games(id , groupName  , data) VALUES (%s, %s, %s) RETURNING data;"
 		cur.execute(query, (cid, groupName, gamejson))
 		#log.info(cur.fetchone()[0])
@@ -408,7 +408,7 @@ def save_game(cid, groupName, game):
 def load_game(cid):
 	cur = conn.cursor()			
 	log.info("Searching Game in DB")
-	query = "SELECT * FROM games WHERE id = %s;"
+	query = "SELECT * FROM games_xapi_bot WHERE id = %s;"
 	cur.execute(query, [cid])
 	dbdata = cur.fetchone()
 
@@ -433,7 +433,7 @@ def load_game(cid):
 def delete_game(cid):
 	cur = conn.cursor()
 	log.info("Deleting Game in DB")
-	query = "DELETE FROM games WHERE id = %s;"
+	query = "DELETE FROM games_xapi_bot WHERE id = %s;"
 	cur.execute(query, [cid])
 	conn.commit()
 	
