@@ -219,7 +219,7 @@ def command_join(bot, update, args):
 				bot.send_message(game.cid, "%s has joined the game. There are currently %d players in the game and you need 5-10 players." % (fname, len(game.playerlist)))
 		except Exception:
 			bot.send_message(game.cid,
-				fname + ", I can\'t send you a private message. Please go to @secrethitlertestlbot and click \"Start\".\nYou then need to send /join again.")
+				fname + ", I can\'t send you a private message. Please go to @xapi_prototype_bot and click \"Start\".\nYou then need to send /join again.")
 
 
 def command_startgame(bot, update):
