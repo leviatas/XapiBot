@@ -696,6 +696,7 @@ def init_game(bot, game, player_number):
         inform_players(bot, game, player_number)
         inform_cultist(bot, game, player_number)
         
+        
 def inform_players(bot, game, cid, player_number):
     log.info('inform_players called')
     bot.send_message(cid,
