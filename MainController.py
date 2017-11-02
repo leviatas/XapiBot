@@ -711,9 +711,9 @@ def inform_players(bot, game, cid, player_number):
         game.playerlist[uid].party = party
         # I comment so tyhe player aren't discturbed in testing, uncomment when deploy to production
         if not debugging:
-                bot.send_message(uid, "Tu rol secreto es: %s\nYour sos de los %s" % (role, party))
+                bot.send_message(uid, "Tu rol secreto es: %s\n. Eres de los %s" % (role, party))
         else:
-                bot.send_message(ADMIN, "Jugador %s su rol es %s, es de los %s" % (game.playerlist[uid].name, role, party))
+                bot.send_message(ADMIN, "Jugador %s su rol es %s. Eres de los %s" % (game.playerlist[uid].name, role, party))
 
 
 def inform_cultist(bot, game, player_number):
@@ -737,7 +737,7 @@ def inform_cultist(bot, game, player_number):
             if player_number <= 6:
                 fascists = game.get_fascists()
                 if not debugging:
-                        bot.send_message(uid, "Your fellow fascist is: %s" % fascists[0].name)
+                        bot.send_message(uid, "No estas definido: %s" % fascists[0].name)
         elif role == "Liberal":
             pass
         else:
