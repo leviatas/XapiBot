@@ -1,44 +1,13 @@
 playerSets = {
     # only for testing purposes
-    3: {
-        "roles": [
-            "Liberal",
-            "Fascist",
-            "Hitler"
-        ],
-        "track": [
-            None,
-            None,
-            "policy",
-            "kill",
-            "kill",
-            "win"
-        ]
-    },
-    # only for testing purposes
-    4: {
-        "roles": [
-            "Liberal",
-            "Liberal",
-            "Fascist",
-            "Hitler"
-        ],
-        "track": [
-            None,
-            None,
-            "policy",
-            "kill",
-            "kill",
-            "win"
-        ]
-    },
+    
     5: {
         "roles": [
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Fascist",
-            "Hitler"
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Cultista"
         ],
         "track": [
             None,
@@ -51,12 +20,12 @@ playerSets = {
     },
     6: {
         "roles": [
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Fascist",
-            "Hitler"
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Cultista",
+            "Cultista"
         ],
         "track": [
             None,
@@ -69,13 +38,13 @@ playerSets = {
     },
     7: {
         "roles": [
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Fascist",
-            "Fascist",
-            "Hitler"
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Cultista",
+            "Cultista"
         ],
         "track": [
             None,
@@ -88,14 +57,14 @@ playerSets = {
     },
     8: {
         "roles": [
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Fascist",
-            "Fascist",
-            "Hitler"
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Cultista",
+            "Cultista"
         ],
         "track": [
             None,
@@ -108,37 +77,15 @@ playerSets = {
     },
     9: {
         "roles": [
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Fascist",
-            "Fascist",
-            "Fascist",
-            "Hitler"
-        ],
-        "track": [
-            "inspect",
-            "inspect",
-            "choose",
-            "kill",
-            "kill",
-            "win"
-        ]
-    },
-    10: {
-        "roles": [
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Fascist",
-            "Fascist",
-            "Fascist",
-            "Hitler"
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Investigador",
+            "Cultista",
+            "Cultista",
+            "Cultista"
         ],
         "track": [
             "inspect",
