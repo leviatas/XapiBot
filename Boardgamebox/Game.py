@@ -25,10 +25,10 @@ class Game(object):
             if self.playerlist[uid].role == "Hitler":
                 return self.playerlist[uid]
 
-    def get_fascists(self):
+    def get_cultist(self):
         fascists = []
         for uid in self.playerlist:
-            if self.playerlist[uid].role == "Fascist":
+            if self.playerlist[uid].role == "Cultista":
                 fascists.append(self.playerlist[uid])
         return fascists
 
