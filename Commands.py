@@ -237,7 +237,7 @@ def command_startgame(bot, update):
 		bot.send_message(game.cid, "There are not enough players (min. 5, max. 10). Join the game with /join")
 	else:
 		player_number = len(game.playerlist)
-		MainController.init_game(bot, game, game.cid, player_number)		
+		MainController.init_game(bot, game, player_number)		
 		game.board = Board(player_number, game)
 		log.info(game.board)
 		log.info("len(games) Command_startgame: " + str(len(GamesController.games)))
