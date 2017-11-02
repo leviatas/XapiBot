@@ -694,7 +694,7 @@ def print_player_info(player_number):
 def init_game(bot, game, player_number):
         log.info('Game Init called')
         inform_players(bot, game, player_number)
-        
+        inform_cultist(bot, game, player_number):
         
 def inform_players(bot, game, cid, player_number):
     log.info('inform_players called')
@@ -717,26 +717,24 @@ def inform_players(bot, game, cid, player_number):
                 bot.send_message(ADMIN, "Jugador %s su rol es %s, es de los %s" % (game.playerlist[uid].name, role, party))
 
 
-def inform_fascists(bot, game, player_number):
-     log.info('inform_fascists called')
-        
-
+def inform_cultist(bot, game, player_number):
+    log.info('inform_fascists called')
     for uid in game.playerlist:
         role = game.playerlist[uid].role
-        if role == "Fascist":
-            fascists = game.get_fascists()
-            if player_number > 6:
+        if role == "Cultista":
+            fascists = game.get_cultist()
+            if player_number > 5:
                 fstring = ""
                 for f in fascists:
                     if f.uid != uid:
                         fstring += f.name + ", "
                 fstring = fstring[:-2]
                 if not debugging:
-                        bot.send_message(uid, "Your fellow fascists are: %s" % fstring)
+                        bot.send_message(uid, "Tus amigos cultistas son: %s" % fstring)
             hitler = game.get_hitler()
             if not debugging:
                         bot.send_message(uid, "Hitler is: %s" % hitler.name) #Uncoomend on production
-        elif role == "Hitler":
+        elif role == "NoDefinido":
             if player_number <= 6:
                 fascists = game.get_fascists()
                 if not debugging:
