@@ -674,25 +674,7 @@ def end_game(bot, game, game_endcode):
         del GamesController.games[game.cid]
         Commands.delete_game(game.cid)
         
-def inform_players(bot, game, cid, player_number):
-    log.info('inform_players called')
-    bot.send_message(cid,
-                     "Let's start the game with %d players!\n%s\nGo to your private chat and look at your secret role!" % (
-                         player_number, print_player_info(player_number)))
-    available_roles = list(playerSets[player_number]["roles"])  # copy not reference because we need it again later
-    for uid in game.playerlist:
-        random_index = randrange(len(available_roles))
-        #log.info(str(random_index))
-        role = available_roles.pop(random_index)
-        #log.info(str(role))
-        party = get_membership(role)
-        game.playerlist[uid].role = role
-        game.playerlist[uid].party = party
-        # I comment so tyhe player aren't discturbed in testing, uncomment when deploy to production
-        if not debugging:
-                bot.send_message(uid, "Your secret role is: %s\nYour party membership is: %s" % (role, party))
-        else:
-                bot.send_message(ADMIN, "Player %s role is %s and party membership is: %s" % (game.playerlist[uid].name, role, party))
+
 
 
 def print_player_info(player_number):
@@ -709,9 +691,35 @@ def print_player_info(player_number):
     elif player_number == 10:
         return "There are 6 Liberals, 3 Fascist and Hitler. Hitler doesn't know who the Fascists are."
 
+def init_game(bot, game, player_number):
+        log.info('Game Init called')
+        inform_players(bot, game, player_number)
+        
+        
+def inform_players(bot, game, cid, player_number):
+    log.info('inform_players called')
+    bot.send_message(cid,
+                     "Let's start the game with %d players!\n%s\nGo to your private chat and look at your secret role!" % (
+                         player_number, print_player_info(player_number)))
+    available_roles = list(playerSets[player_number]["roles"])
+    for uid in game.playerlist:
+        random_index = randrange(len(available_roles))
+        #log.info(str(random_index))
+        role = available_roles.pop(random_index)
+        #log.info(str(role))
+        party = get_membership(role)
+        game.playerlist[uid].role = role
+        game.playerlist[uid].party = party
+        # I comment so tyhe player aren't discturbed in testing, uncomment when deploy to production
+        if not debugging:
+                bot.send_message(uid, "Tu rol secreto es: %s\nYour sos de los %s" % (role, party))
+        else:
+                bot.send_message(ADMIN, "Jugador %s su rol es %s, es de los %s" % (game.playerlist[uid].name, role, party))
+
 
 def inform_fascists(bot, game, player_number):
-    log.info('inform_fascists called')
+     log.info('inform_fascists called')
+        
 
     for uid in game.playerlist:
         role = game.playerlist[uid].role
@@ -741,10 +749,10 @@ def inform_fascists(bot, game, player_number):
 
 def get_membership(role):
     log.info('get_membership called')
-    if role == "Fascist" or role == "Hitler":
-        return "fascist"
-    elif role == "Liberal":
-        return "liberal"
+    if role == "Cultista" or role == "Cultista":
+        return "malo"
+    elif role == "Investigador":
+        return "bueno"
     else:
         return None
 
