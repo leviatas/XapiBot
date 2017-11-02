@@ -16,6 +16,6 @@ class Board(object):
         board = "--- Infeccion actual ---\n"
         
         for player in player_list:
-            board += "%s tiene %d tokens\n" % (player.name, player.tokens_infeccion)
+            board += player.name + " tiene " + str(player.tokens_infeccion) + "tokens\n"
             
         return board
