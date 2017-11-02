@@ -201,7 +201,7 @@ def command_join(bot, update, args):
 		bot.send_message(cid, "The game has started. Please wait for the next game!")
 	elif uid in game.playerlist:
 		bot.send_message(game.cid, "You already joined the game, %s!" % fname)
-	elif len(game.playerlist) >= 10:
+	elif len(game.playerlist) >= 9:
 		bot.send_message(game.cid, "You have reached the maximum amount of players. Please start the game with /startgame!")
 	else:
 		#uid = update.message.from_user.id
@@ -237,8 +237,7 @@ def command_startgame(bot, update):
 		bot.send_message(game.cid, "There are not enough players (min. 5, max. 10). Join the game with /join")
 	else:
 		player_number = len(game.playerlist)
-		MainController.init_game(bot, game, game.cid, player_number)
-		
+		MainController.init_game(bot, game, game.cid, player_number)		
 		game.board = Board(player_number, game)
 		log.info(game.board)
 		log.info("len(games) Command_startgame: " + str(len(GamesController.games)))
