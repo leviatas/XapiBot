@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-__author__ = "Julian Schrittwieser"
+__author__ = "Eduardo Peluffo"
 
 import json
 import logging as log
@@ -50,7 +50,7 @@ query = "SELECT ...."
 cur.execute(query)
 '''
 
-debugging = True
+debugging = False
 
 def initialize_testdata():
     # Sample game for quicker tests
