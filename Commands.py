@@ -246,7 +246,7 @@ def command_startgame(bot, update):
 		bot.send_message(game.cid, game.board.print_board(game.playerlist))
 		#group_name = update.message.chat.title
 		#bot.send_message(ADMIN, "Game of Secret Hitler started in group %s (%d)" % (group_name, cid))		
-		MainController.start_round(bot, game)
+		#MainController.start_round(bot, game)
 		#save_game(cid, groupName, game)
 
 def command_cancelgame(bot, update):
