@@ -16,8 +16,8 @@ class Board(object):
         board = "--- Infeccion actual ---\n"
         
         for uid in player_list:
-            board += "%s tiene " % (playerlist[uid].name)
-            for i in range(playerlist[uid].tokens_infeccion):
+            board += "%s tiene " % (player_list[uid].name)
+            for i in range(player_list[uid].tokens_infeccion):
                 board += "\U0001F47F"            
             board += "\n"            
         return board
