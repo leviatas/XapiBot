@@ -702,13 +702,10 @@ def inform_players(bot, game, cid, player_number):
         player_number, print_player_info(player_number)))
         available_roles = list(playerSets[player_number]["roles"])
         
-        # Elijo al jugador poseido
-        bot.send_message(ADMIN, "Eligiendo poseido")  
+        # Elijo al jugador poseido        
         poseidoid = choice(list(game.playerlist))
-        bot.send_message(ADMIN, "El jugador poseido es: %s" % (poseidoid))  
-        game.playerlist[poseidoid].poseidoid = True
-        
-        
+        game.playerlist[poseidoid].poseido = True
+                
         for uid in game.playerlist:
                 random_index = randrange(len(available_roles))
                 #log.info(str(random_index))
