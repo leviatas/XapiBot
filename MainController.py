@@ -78,7 +78,7 @@ def start_round(bot, game):
         # --> choose_policy --> pass_two_policies --> choose_policy --> enact_policy --> start_round
 
 def call_to_action(bot, game):
-        log.info('vote called')
+        log.info('call_to_action called')
         #When voting starts we start the counter to see later with the vote command if we can see you voted.
         game.dateinitvote = datetime.datetime.now()
 
