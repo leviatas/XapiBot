@@ -6,4 +6,5 @@ class Player(object):
         self.party = None
         self.is_dead = False
         self.inspected_players = {} 
-        self.tokens_infeccion = 0
+        self.tokens_posesion = 0
+        self.poseido = False
