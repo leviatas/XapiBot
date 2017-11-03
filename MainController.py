@@ -840,6 +840,7 @@ def main():
         dp.add_handler(CommandHandler("claim", Commands.command_claim, pass_args = True))
         dp.add_handler(CommandHandler("infect", Commands.command_infect, pass_args = True))
         dp.add_handler(CommandHandler("ver", Commands.command_ver, pass_args = True))
+        dp.add_handler(CommandHandler("otra", Commands.command_otra, pass_args = True))
         
         #Testing commands
         dp.add_handler(CommandHandler("ja", Commands.command_ja))
