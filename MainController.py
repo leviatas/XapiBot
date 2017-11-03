@@ -50,7 +50,7 @@ query = "SELECT ...."
 cur.execute(query)
 '''
 
-debugging = True
+debugging = False
 
 def initialize_testdata():
     # Sample game for quicker tests
@@ -142,7 +142,7 @@ def count_actions(bot, game):
         for player in game.player_sequence:                
                 action_text += "%s eligio la accion: %s\n" % (game.playerlist[player.uid].name, game.board.state.last_votes[player.uid])                
         game.history.append("Round %d\n\n" % (game.board.state.currentround + 1) + action_text)
-        bot.send_message(game.cid, "%s\n\nAhora planifiquen el uso de sus acciones." % (action_text))                    
+        bot.send_message(game.cid, "%s\nAhora planifiquen el uso de sus acciones." % (action_text))                    
         
 def choose_chancellor(bot, game):
     log.info('choose_chancellor called')
