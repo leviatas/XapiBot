@@ -518,13 +518,13 @@ def command_limpiar(bot, update, args):
 					if len(args) > 1:
 						try:							
 							player.tokens_posesion -= int(args[1])
-							bot.send_message(cid, "El jugador %s ha ganado %s %s de posesión" % (args[0], args[1], "tokens" if int(args[1]) > 1 else "token"))								
+							bot.send_message(cid, "El jugador %s ha perdido %s %s de posesión" % (args[0], args[1], "tokens" if int(args[1]) > 1 else "token"))								
 							bot.send_message(game.cid, game.board.print_board(game.playerlist))
 						except Exception as e:
 							bot.send_message(cid, str(e))
 					else:
 						player.tokens_posesion -= 1
-						bot.send_message(cid, "El jugador %s ha ganado un token de posesión" % (args[0]))
+						bot.send_message(cid, "El jugador %s ha perdido un token de posesión" % (args[0]))
 						bot.send_message(game.cid, game.board.print_board(game.playerlist))
 				else:
 					bot.send_message(cid, "El jugador no existe en esta partida") 
