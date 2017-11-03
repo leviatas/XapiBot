@@ -133,7 +133,17 @@ def handle_action(bot, update):
     except Exception as e:
         log.error(str(e))
                         
-
+def count_actions(bot, game):
+        # La votacion ha finalizado.
+        game.dateinitvote = None
+        # La votacion ha finalizado.
+        log.info('count_actions called')
+        action_text = ""        
+        for player in game.player_sequence:                
+                action_text += "%s eligio la accion: %s\n" % (game.playerlist[player.uid].name, game.board.state.last_votes[player.uid])                
+        game.history.append("Round %d\n\n" % (game.board.state.currentround + 1) + action_text)
+        bot.send_message(game.cid, "%s\n\nAhora planifiquen el uso de sus acciones." % (action_text))                    
+        
 def choose_chancellor(bot, game):
     log.info('choose_chancellor called')
     strcid = str(game.cid)
@@ -894,7 +904,8 @@ def main():
         #Testing commands
         dp.add_handler(CommandHandler("ja", Commands.command_ja))
         dp.add_handler(CommandHandler("nein", Commands.command_nein))
-
+        dp.add_handler(CommandHandler("elegimos" Commands.command_elegimos, pass_args = True)) 
+        
         dp.add_handler(CallbackQueryHandler(pattern="(-[0-9]*)_chan_(.*)", callback=nominate_chosen_chancellor))
         dp.add_handler(CallbackQueryHandler(pattern="(-[0-9]*)_insp_(.*)", callback=choose_inspect))
         dp.add_handler(CallbackQueryHandler(pattern="(-[0-9]*)_choo_(.*)", callback=choose_choose))
