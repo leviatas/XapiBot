@@ -459,6 +459,16 @@ def command_nein(bot, update):
 			game.board.state.last_votes[uid] = answer
 		MainController.count_votes(bot, game)
 
+def command_elegimos(bot, update, args):
+	uid = update.message.from_user.id
+	if uid == ADMIN:
+		if len(args) > 0:
+			cid = update.message.chat_id
+			game = GamesController.games.get(cid, None)		
+			for uid in game.playerlist:
+				game.board.state.last_votes[uid] = args[0]
+			MainController.count_votes(bot, game)
+		
 def command_ver(bot, update, args):
 	try:
 		#Send message of executing command   
