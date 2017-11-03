@@ -436,39 +436,6 @@ def delete_game(cid):
 	cur.execute(query, [cid])
 	conn.commit()
 	
-	
-#Testing commands
-def command_ja(bot, update):
-	uid = update.message.from_user.id
-	if uid == ADMIN:
-		cid = update.message.chat_id
-		game = GamesController.games.get(cid, None)
-		answer = "Ja"
-		for uid in game.playerlist:
-			game.board.state.last_votes[uid] = answer
-		MainController.count_votes(bot, game)
-	
-
-def command_nein(bot, update):	
-	uid = update.message.from_user.id
-	if uid == ADMIN:
-		cid = update.message.chat_id
-		game = GamesController.games.get(cid, None)
-		answer = "Nein"
-		for uid in game.playerlist:
-			game.board.state.last_votes[uid] = answer
-		MainController.count_votes(bot, game)
-
-def command_elegimos(bot, update, args):
-	uid = update.message.from_user.id
-	if uid == ADMIN:
-		if len(args) > 0:
-			cid = update.message.chat_id
-			game = GamesController.games.get(cid, None)		
-			for uid in game.playerlist:
-				game.board.state.last_votes[uid] = args[0]
-			MainController.count_votes(bot, game)
-		
 def command_ver(bot, update, args):
 	try:
 		#Send message of executing command   
@@ -599,3 +566,36 @@ def call_to_action(bot, update):
 			bot.send_message(cid, "No hay juego en este chat. Crea un juego con /newgame")
 	except Exception as e:
 		bot.send_message(cid, str(e))
+		
+#Testing commands
+def command_ja(bot, update):
+	uid = update.message.from_user.id
+	if uid == ADMIN:
+		cid = update.message.chat_id
+		game = GamesController.games.get(cid, None)
+		answer = "Ja"
+		for uid in game.playerlist:
+			game.board.state.last_votes[uid] = answer
+		MainController.count_votes(bot, game)
+	
+
+def command_nein(bot, update):	
+	uid = update.message.from_user.id
+	if uid == ADMIN:
+		cid = update.message.chat_id
+		game = GamesController.games.get(cid, None)
+		answer = "Nein"
+		for uid in game.playerlist:
+			game.board.state.last_votes[uid] = answer
+		MainController.count_votes(bot, game)
+
+def command_elegimos(bot, update, args):
+	uid = update.message.from_user.id
+	if uid == ADMIN:
+		if len(args) > 0:
+			cid = update.message.chat_id
+			game = GamesController.games.get(cid, None)		
+			for uid in game.playerlist:
+				game.board.state.last_votes[uid] = args[0]
+			MainController.count_actions(bot, game)
+		
