@@ -50,7 +50,7 @@ query = "SELECT ...."
 cur.execute(query)
 '''
 
-debugging = False
+debugging = True
 
 def initialize_testdata():
     # Sample game for quicker tests
@@ -703,7 +703,7 @@ def inform_players(bot, game, cid, player_number):
         available_roles = list(playerSets[player_number]["roles"])
         
         # Elijo al jugador poseido
-        poseidoid = choice(game.playerlist.keys())
+        poseidoid = choice(list(game.playerlist))
         game.playerlist[poseidoid].poseidoid = True
                 
         for uid in game.playerlist:
