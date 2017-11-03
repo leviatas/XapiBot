@@ -6,7 +6,7 @@ import json
 import logging as log
 import random
 import re
-from random import randrange
+from random import randrange, choice
 from time import sleep
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
@@ -696,49 +696,61 @@ def init_game(bot, game, cid, player_number):
         
         
 def inform_players(bot, game, cid, player_number):
-    log.info('inform_players called')
-    bot.send_message(cid,
-                     "Let's start the game with %d players!\n%s\nGo to your private chat and look at your secret role!" % (
-                         player_number, print_player_info(player_number)))
-    available_roles = list(playerSets[player_number]["roles"])
-    for uid in game.playerlist:
-        random_index = randrange(len(available_roles))
-        #log.info(str(random_index))
-        role = available_roles.pop(random_index)
-        #log.info(str(role))
-        party = get_membership(role)
-        game.playerlist[uid].role = role
-        game.playerlist[uid].party = party
-        # I comment so tyhe player aren't discturbed in testing, uncomment when deploy to production
-        if not debugging:
-                bot.send_message(uid, "Tu rol secreto es: %s\nEres de los %s" % (role, party))
-        else:
-                bot.send_message(ADMIN, "Jugador %s su rol es %s. Eres de los %s" % (game.playerlist[uid].name, role, party))
+        log.info('inform_players called')
+        bot.send_message(cid,
+                "Comencemos el juego con %d jugadores\n%s\nVe a tu chat privado y mira tu rol secreto!" % (
+        player_number, print_player_info(player_number)))
+        available_roles = list(playerSets[player_number]["roles"])
+        
+        # Elijo al jugador poseido
+        poseidoid = choice(game.playerlist.keys())
+        game.playerlist[poseidoid].poseidoid = True
+                
+        for uid in game.playerlist:
+                random_index = randrange(len(available_roles))
+                #log.info(str(random_index))
+                role = available_roles.pop(random_index)
+                #log.info(str(role))
+                party = get_membership(role)
+                game.playerlist[uid].role = role
+                game.playerlist[uid].party = party
+                # I comment so tyhe player aren't discturbed in testing, uncomment when deploy to production
+                if not debugging:
+                        bot.send_message(uid, "Tu rol secreto es: %s\nEres de los %s" % (role, party))
+                else:
+                        bot.send_message(ADMIN, "Jugador %s su rol es %s. Eres de los %s" % (game.playerlist[uid].name, role, party))
 
 
 def inform_cultist(bot, game, player_number):
-    log.info('inform_fascists called')
-    for uid in game.playerlist:
-        role = game.playerlist[uid].role
-        if role == "Cultista":
-            fascists = game.get_cultist()
-            if player_number > 5:
-                fstring = ""
-                for f in fascists:
-                    if f.uid != uid:
-                        fstring += f.name + ", "
-                fstring = fstring[:-2]
-                if not debugging:
-                        bot.send_message(uid, "Tus amigos cultistas son: %s" % fstring)            
-        elif role == "NoDefinido":
-            if player_number <= 6:
-                fascists = game.get_fascists()
-                if not debugging:
-                        bot.send_message(uid, "No estas definido: %s" % fascists[0].name)
-        elif role == "Liberal":
-            pass
-        else:
-            log.error("inform_fascists: can\'t handle the role %s" % role)
+        log.info('inform_fascists called')
+        for uid in game.playerlist:
+                role = game.playerlist[uid].role        
+                if role == "Cultista":
+                        fascists = game.get_cultist()
+                        poseidos = game.get_poseidos()                        
+                        pstring = ""
+                        for p in poseidos:
+                                if p.uid != uid:
+                                        pstring += p.name + ", "
+                        pstring = pstring[:-2]
+                        
+                        if not debugging:
+                                bot.send_message(uid, "El/los jugador/es poseido/s es/son: %s" % fstring)    
+                        else
+                                bot.send_message(ADMIN, "El/los jugador/es poseido/s es/son: %s" % fstring)  
+                                
+                        if player_number > 5:
+                                fstring = ""
+                                for f in fascists:
+                                        if f.uid != uid:
+                                                fstring += f.name + ", "
+                                fstring = fstring[:-2]
+                        if not debugging:
+                                bot.send_message(uid, "Tus amigos cultistas son: %s" % fstring)
+                elif role == "Investigador":
+                        pass
+                else:
+                        log.error("inform_fascists: can\'t handle the role %s" % role)
 
 
 def get_membership(role):
@@ -774,6 +786,9 @@ def error(bot, update, error):
     #bot.send_message(387393551, 'Update "%s" caused error "%s"' % (update, error) ) 
     logger.warning('Update "%s" caused error "%s"' % (update, error))
 
+def find_key(input_dict, value):
+    return next((k for k, v in input_dict.items() if v == value), None)
+        
 def main():
         GamesController.init() #Call only once
         #initialize_testdata()
