@@ -703,8 +703,9 @@ def inform_players(bot, game, cid, player_number):
         available_roles = list(playerSets[player_number]["roles"])
         
         # Elijo al jugador poseido
+        bot.send_message(ADMIN, "Eligiendo poseido")  
         poseidoid = choice(list(game.playerlist))
-        bot.send_message(ADMIN, "Eljugador poseido es: %s" % poseidoid)  
+        bot.send_message(ADMIN, "El jugador poseido es: %s" % (poseidoid))  
         game.playerlist[poseidoid].poseidoid = True
         
         
