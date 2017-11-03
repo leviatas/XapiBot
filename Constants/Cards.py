@@ -9,11 +9,11 @@ actions = {
     },
     "Asesinar" : {
         "costo" : "Mitad +1",
-        "comando" : "_Ver" 
+        "comando" : "_Asesinar" 
     },
-    "Ver" : {
+    "Exorcisar" : {
         "costo" : "Cantidad de jugadores investigadores",
-        "comando" : "_Ver" 
+        "comando" : "_Exorcisar" 
     }
 }
 
