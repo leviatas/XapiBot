@@ -73,31 +73,68 @@ def start_round(bot, game):
         game.board.state.currentround += 1
                 
         bot.send_message(game.cid, "Por favor, elijan su acción.")
-        calltoaction(bot, game)
+        call_to_action(bot, game)
         # --> calltoaction --> chooseaction --> handle_voting --> count_votes --> voting_aftermath --> draw_policies
         # --> choose_policy --> pass_two_policies --> choose_policy --> enact_policy --> start_round
 
-def calltoaction(bot, game):
+def call_to_action(bot, game):
         log.info('vote called')
         #When voting starts we start the counter to see later with the vote command if we can see you voted.
         game.dateinitvote = datetime.datetime.now()
 
-        strcid = str(game.cid)
-        
-        btns = []
-        
+        strcid = str(game.cid)        
+        btns = []        
         for actionid in actions:
                 costo = actions[actionid]["costo"]
                 comando = actions[actionid]["comando"]
-                btns.append([InlineKeyboardButton("%s (%s)" % (actionid, costo), callback_data=strcid + comando)])        
+                btns.append([InlineKeyboardButton("%s (%s)" % (actionid, costo), callback_data=strcid + "_action_" + comando)])        
         
         voteMarkup = InlineKeyboardMarkup(btns)
         for uid in game.playerlist:
-                if not debugging:                        
+                if not debugging:
                         bot.send_message(uid, "¿Cuál acción desea realizar?", reply_markup=voteMarkup)
-                else
+                else:
                         bot.send_message(ADMIN, "¿Cuál acción desea realizar?", reply_markup=voteMarkup)
+
+def handle_action(bot, update):
+    callback = update.callback_query
+    log.info('handle_action called: %s' % callback.data)
+    regex = re.search("(-[0-9]*)_action_([0-9]*)", callback.data)
+    cid = int(regex.group(1))
+    answer = regex.group(2)
+    strcid = regex.group(1)
+    try:
+        game = GamesController.games[cid]
+        uid = callback.from_user.id
         
+        bot.edit_message_text("Has elegido la accion %s" % (answer), uid, callback.message.message_id)
+        log.info("Player %s (%d) voted %s" % (callback.from_user.first_name, uid, answer))
+        
+        #if uid not in game.board.state.last_votes:
+        game.board.state.last_votes[uid] = answer
+        
+        #Allow player to change his vote
+        btns = []        
+        for actionid in actions:
+                costo = actions[actionid]["costo"]
+                comando = actions[actionid]["comando"]
+                btns.append([InlineKeyboardButton("%s (%s)" % (actionid, costo), callback_data=strcid + "_action_" + comando)])        
+        
+        voteMarkup = InlineKeyboardMarkup(btns)
+        
+        for uid in game.playerlist:
+                if not debugging:
+                        bot.send_message(uid, "Podes cambiar tu accion aca.\n¿Cuál acción desea realizar?", reply_markup=voteMarkup)
+                else:
+                        bot.send_message(ADMIN, "Podes cambiar tu accion aca.\n¿Cuál acción desea realizar?", reply_markup=voteMarkup)
+        
+        #Commands.save_game(game.cid, "Saved Round %d" % (game.board.state.currentround), game)
+        if len(game.board.state.last_votes) == len(game.player_sequence):
+                count_votes(bot, game)
+    except Exception as e:
+        log.error(str(e))
+                        
+
 def choose_chancellor(bot, game):
     log.info('choose_chancellor called')
     strcid = str(game.cid)
@@ -867,7 +904,9 @@ def main():
         dp.add_handler(CallbackQueryHandler(pattern="(-[0-9]*)_(yesveto|noveto)", callback=choose_veto))
         dp.add_handler(CallbackQueryHandler(pattern="(-[0-9]*)_(liberal|fascist|veto)", callback=choose_policy))
         dp.add_handler(CallbackQueryHandler(pattern="(-[0-9]*)_(Ja|Nein)", callback=handle_voting))
-
+        
+        dp.add_handler(CallbackQueryHandler(pattern="(-[0-9]*)_action_(.*)", callback=handle_action))
+        
 
         # log all errors
         dp.add_error_handler(error)
