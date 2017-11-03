@@ -1,3 +1,22 @@
+actions = {
+    "Ver" : {
+        "costo" : "2",
+        "comando" : "_Ver" 
+    },
+    "Limpiar" : {
+        "costo" : "3",
+        "comando" : "_Limpiar" 
+    },
+    "Asesinar" : {
+        "costo" : "Mitad +1",
+        "comando" : "_Ver" 
+    },
+    "Ver" : {
+        "costo" : "Cantidad de jugadores investigadores",
+        "comando" : "_Ver" 
+    }
+}
+
 playerSets = {
     # only for testing purposes
     
