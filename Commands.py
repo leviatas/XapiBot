@@ -469,14 +469,29 @@ def command_infect(bot, update, args):
 			game = GamesController.games.get(cid, None)
 			
 			if len(args) > 0:
-				bot.send_message(cid, "Se ha infectado a: " + args[0]) 
+				uid = find_key(game.player_sequence, args[0])
+				if uid:
+					if len(args) > 1
+						try:							
+							game.player_sequence[uid].tokens_posesion += int(args[1])
+							Bot.send_message(cid, "El jugador %s ha ganado %s %s de posesión" % (args[0], args[1], "tokens" if args[1] > 1 else "token"))								
+						except Exception as e:
+							bot.send_message(cid, str(e))
+					else
+						game.player_sequence[uid].tokens_posesion += 1
+						bot.send_message(cid, "El jugador %s ha ganado un token de posesión" % (args[0])) 
+				else:
+					bot.send_message(cid, "El jugador no existe en esta partida") 
 			else:				
 				for player in game.player_sequence:
 					player.tokens_posesion += 1							
-				bot.send_message(cid, "Todos los jugadores han sido infectados") 
+				bot.send_message(cid, "Todos los jugadores han ganado un token de posesión") 
 				bot.send_message(game.cid, game.board.print_board(game.playerlist))
 		else:
 			bot.send_message(cid, "No hay juego en este chat. Crea un juego con /newgame")
 	except Exception as e:
 		bot.send_message(cid, str(e))
+		
+def find_key(input_dict, value):
+    return next((k for k, v in input_dict.items() if v == value), None)
 	
