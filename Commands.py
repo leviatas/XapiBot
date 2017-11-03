@@ -492,7 +492,3 @@ def command_infect(bot, update, args):
 			bot.send_message(cid, "No hay juego en este chat. Crea un juego con /newgame")
 	except Exception as e:
 		bot.send_message(cid, str(e))
-		
-def find_key(input_dict, value):
-    return next((k for k, v in input_dict.items() if v == value), None)
-	
