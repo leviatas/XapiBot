@@ -13,7 +13,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
 from telegram.ext import (Updater, CommandHandler, CallbackQueryHandler)
 
 import Commands
-from Constants.Cards import playerSets
+from Constants.Cards import playerSets, actions
 from Constants.Config import TOKEN, STATS, ADMIN
 from Boardgamebox.Game import Game
 from Boardgamebox.Player import Player
@@ -50,7 +50,7 @@ query = "SELECT ...."
 cur.execute(query)
 '''
 
-debugging = False
+debugging = True
 
 def initialize_testdata():
     # Sample game for quicker tests
@@ -71,22 +71,33 @@ def start_round(bot, game):
         log.info('start_round called')
         # Starting a new round makes the current round to go up    
         game.board.state.currentround += 1
-        
-        log.info(game.board.state.chosen_president)
-        
-        if game.board.state.chosen_president is None:
-                game.board.state.nominated_president = game.player_sequence[game.board.state.player_counter]
-        else:
-                game.board.state.nominated_president = game.board.state.chosen_president
-                game.board.state.chosen_president = None
-        
-        msgtext =  "The next presidential canditate is [%s](tg://user?id=%d).\n%s, please nominate a Chancellor in our private chat!" % (game.board.state.nominated_president.name, game.board.state.nominated_president.uid, game.board.state.nominated_president.name)
-        bot.send_message(game.cid, msgtext, ParseMode.MARKDOWN)
-        choose_chancellor(bot, game)
-        # --> nominate_chosen_chancellor --> vote --> handle_voting --> count_votes --> voting_aftermath --> draw_policies
+                
+        bot.send_message(game.cid, "Por favor, elijan su acción.")
+        calltoaction(bot, game)
+        # --> calltoaction --> chooseaction --> handle_voting --> count_votes --> voting_aftermath --> draw_policies
         # --> choose_policy --> pass_two_policies --> choose_policy --> enact_policy --> start_round
 
+def calltoaction(bot, game):
+        log.info('vote called')
+        #When voting starts we start the counter to see later with the vote command if we can see you voted.
+        game.dateinitvote = datetime.datetime.now()
 
+        strcid = str(game.cid)
+        
+        btns = []
+        
+        for actionid in actions:
+                costo = actions[actionid]["costo"]
+                comando = actions[actionid]["comando"]
+                btns.append([InlineKeyboardButton("%s (%s)" % (actionid, costo), callback_data=strcid + comando)])        
+        
+        voteMarkup = InlineKeyboardMarkup(btns)
+        for uid in game.playerlist:
+                if not debugging:                        
+                        bot.send_message(uid, "¿Cuál acción desea realizar?", reply_markup=voteMarkup)
+                else
+                        bot.send_message(ADMIN, "¿Cuál acción desea realizar?", reply_markup=voteMarkup)
+        
 def choose_chancellor(bot, game):
     log.info('choose_chancellor called')
     strcid = str(game.cid)
@@ -842,6 +853,8 @@ def main():
         dp.add_handler(CommandHandler("ver", Commands.command_ver, pass_args = True))
         dp.add_handler(CommandHandler("otra", Commands.command_otra, pass_args = True))
         dp.add_handler(CommandHandler("limpiar", Commands.command_limpiar, pass_args = True))
+        
+        dp.add_handler(CommandHandler("calltoaction", Commands.command_startround))
                 
         #Testing commands
         dp.add_handler(CommandHandler("ja", Commands.command_ja))
