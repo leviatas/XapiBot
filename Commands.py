@@ -472,7 +472,7 @@ def command_infect(bot, update, args):
 				bot.send_message(cid, "Se ha infectado a: " + args[0]) 
 			else:				
 				for player in game.player_sequence:
-					player.tokens_infeccion += 1							
+					player.tokens_posesion += 1							
 				bot.send_message(cid, "Todos los jugadores han sido infectados") 
 				bot.send_message(game.cid, game.board.print_board(game.playerlist))
 		else:
