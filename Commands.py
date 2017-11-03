@@ -469,12 +469,11 @@ def command_infect(bot, update, args):
 			game = GamesController.games.get(cid, None)
 			
 			if len(args) > 0:
-				uid = next((k for k, v in game.player_sequence.items() if v.args[0] == args[0]), None)
-				bot.send_message(cid, "ID del jugador %i " % (uid) 
-				if uid:
+				player = game.find_player(args[0])
+				if player:
 					if len(args) > 1:
 						try:							
-							game.player_sequence[uid].tokens_posesion += int(args[1])
+							player.tokens_posesion += int(args[1])
 							Bot.send_message(cid, "El jugador %s ha ganado %s %s de posesión" % (args[0], args[1], "tokens" if args[1] > 1 else "token"))								
 						except Exception as e:
 							bot.send_message(cid, str(e))
