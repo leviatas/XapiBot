@@ -13,11 +13,11 @@ class Board(object):
         self.previous = []
    
     def print_board(self, player_list):
-        board = "--- Infeccion actual ---\n"
+        board = "--- Posesión actual ---\n"
         
         for uid in player_list:
             board += "%s tiene " % (player_list[uid].name)
-            for i in range(player_list[uid].tokens_infeccion):
+            for i in range(player_list[uid].tokens_posesion):
                 board += "\U0001F47F"            
             board += "\n"            
         return board
