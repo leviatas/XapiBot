@@ -575,3 +575,17 @@ def command_infect(bot, update, args):
 			bot.send_message(cid, "No hay juego en este chat. Crea un juego con /newgame")
 	except Exception as e:
 		bot.send_message(cid, str(e))
+		
+def calltoaction(bot, update, args):
+	try:
+		#Send message of executing command   
+		cid = update.message.chat_id
+		#bot.send_message(cid, "Looking for history...")
+		#Check if there is a current game 
+		if cid in GamesController.games.keys():
+			game = GamesController.games.get(cid, None)
+			MainController.start_round(bot, game)		
+		else:
+			bot.send_message(cid, "No hay juego en este chat. Crea un juego con /newgame")
+	except Exception as e:
+		bot.send_message(cid, str(e))
