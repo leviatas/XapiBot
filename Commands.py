@@ -79,7 +79,7 @@ def command_board(bot, update):
 	if cid in GamesController.games.keys():
 		game = GamesController.games[cid]
 		if game.board:			
-			bot.send_message(cid, game.board.print_board(game.player_sequence))
+			bot.send_message(cid, game.board.print_board(game.playerlist))
 		else:
 			bot.send_message(cid, "There is no running game in this chat. Please start the game with /startgame")
 	else:
@@ -519,11 +519,13 @@ def command_infect(bot, update, args):
 						try:							
 							player.tokens_posesion += int(args[1])
 							bot.send_message(cid, "El jugador %s ha ganado %s %s de posesión" % (args[0], args[1], "tokens" if args[1] > 1 else "token"))								
+							bot.send_message(game.cid, game.board.print_board(game.playerlist))
 						except Exception as e:
 							bot.send_message(cid, str(e))
 					else:
 						player.tokens_posesion += 1
-						bot.send_message(cid, "El jugador %s ha ganado un token de posesión" % (args[0])) 
+						bot.send_message(cid, "El jugador %s ha ganado un token de posesión" % (args[0]))
+						bot.send_message(game.cid, game.board.print_board(game.playerlist))
 				else:
 					bot.send_message(cid, "El jugador no existe en esta partida") 
 			else:				
