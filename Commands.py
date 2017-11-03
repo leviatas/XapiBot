@@ -502,6 +502,44 @@ def command_otra(bot, update, args):
 			bot.send_message(cid, "No hay juego en este chat. Crea un juego con /newgame")
 	except Exception as e:
 		bot.send_message(cid, str(e))
+
+def command_limpiar(bot, update, args):
+	try:
+		#Send message of executing command   
+		cid = update.message.chat_id
+		#bot.send_message(cid, "Looking for history...")
+		#Check if there is a current game 
+		if cid in GamesController.games.keys():
+			game = GamesController.games.get(cid, None)
+			
+			if len(args) > 0:
+				player = game.find_player(args[0])
+				if player:
+					if len(args) > 1:
+						try:							
+							player.tokens_posesion -= int(args[1])
+							bot.send_message(cid, "El jugador %s ha ganado %s %s de posesión" % (args[0], args[1], "tokens" if int(args[1]) > 1 else "token"))								
+							bot.send_message(game.cid, game.board.print_board(game.playerlist))
+						except Exception as e:
+							bot.send_message(cid, str(e))
+					else:
+						player.tokens_posesion -= 1
+						bot.send_message(cid, "El jugador %s ha ganado un token de posesión" % (args[0]))
+						bot.send_message(game.cid, game.board.print_board(game.playerlist))
+				else:
+					bot.send_message(cid, "El jugador no existe en esta partida") 
+			else:				
+				'''
+				for player in game.player_sequence:
+					player.tokens_posesion -= 1							
+				bot.send_message(cid, "Todos los jugadores han ganado un token de posesión") 
+				bot.send_message(game.cid, game.board.print_board(game.playerlist))
+				'''
+				bot.send_message(cid, "Se debe elegir a un jugador") 
+		else:
+			bot.send_message(cid, "No hay juego en este chat. Crea un juego con /newgame")
+	except Exception as e:
+		bot.send_message(cid, str(e))
 		
 def command_infect(bot, update, args):
 	try:
