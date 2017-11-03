@@ -481,6 +481,28 @@ def command_ver(bot, update, args):
 	except Exception as e:
 		bot.send_message(cid, str(e))
 		
+def command_otra(bot, update, args):
+	try:
+		#Send message of executing command   
+		cid = update.message.chat_id
+		#bot.send_message(cid, "Looking for history...")
+		#Check if there is a current game 
+		if cid in GamesController.games.keys():
+			game = GamesController.games.get(cid, None)
+			uid = update.message.from_user.id
+			if len(args) > 0:
+				player = game.find_player(args[0])
+				if player:
+					bot.send_message(uid, "El jugador '%s ha sido afectado por acción 'otra" % (player.name)) 
+				else:
+					bot.send_message(cid, "El jugador no existe en esta partida") 
+			else:					
+				bot.send_message(cid, "Se tiene que pasar un jugador para ver.") 
+		else:
+			bot.send_message(cid, "No hay juego en este chat. Crea un juego con /newgame")
+	except Exception as e:
+		bot.send_message(cid, str(e))
+		
 def command_infect(bot, update, args):
 	try:
 		#Send message of executing command   
