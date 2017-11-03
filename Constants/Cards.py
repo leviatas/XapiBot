@@ -1,19 +1,19 @@
 actions = {
     "Ver" : {
         "costo" : "2",
-        "comando" : "_Ver" 
+        "comando" : "Ver" 
     },
     "Limpiar" : {
         "costo" : "3",
-        "comando" : "_Limpiar" 
+        "comando" : "Limpiar" 
     },
     "Asesinar" : {
         "costo" : "Mitad +1",
-        "comando" : "_Asesinar" 
+        "comando" : "Asesinar" 
     },
     "Exorcisar" : {
         "costo" : "Cantidad de jugadores investigadores",
-        "comando" : "_Exorcisar" 
+        "comando" : "Exorcisar" 
     }
 }
 
