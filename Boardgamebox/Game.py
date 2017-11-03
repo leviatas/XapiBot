@@ -25,6 +25,12 @@ class Game(object):
             if self.playerlist[uid].role == "Hitler":
                 return self.playerlist[uid]
 
+    def find_player(self, name):
+        for uid in self.playerlist:
+            if self.playerlist[uid].name == name:
+                return self.playerlist[uid]
+        return None;
+    
     def get_cultist(self):
         cultistas = []
         for uid in self.playerlist:
