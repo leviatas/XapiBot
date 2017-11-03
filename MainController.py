@@ -904,7 +904,7 @@ def main():
         #Testing commands
         dp.add_handler(CommandHandler("ja", Commands.command_ja))
         dp.add_handler(CommandHandler("nein", Commands.command_nein))
-        dp.add_handler(CommandHandler("elegimos" Commands.command_elegimos, pass_args = True)) 
+        dp.add_handler(CommandHandler("elegimos", Commands.command_elegimos, pass_args = True)) 
         
         dp.add_handler(CallbackQueryHandler(pattern="(-[0-9]*)_chan_(.*)", callback=nominate_chosen_chancellor))
         dp.add_handler(CallbackQueryHandler(pattern="(-[0-9]*)_insp_(.*)", callback=choose_inspect))
