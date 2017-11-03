@@ -576,7 +576,7 @@ def command_infect(bot, update, args):
 	except Exception as e:
 		bot.send_message(cid, str(e))
 		
-def calltoaction(bot, update, args):
+def call_to_action(bot, update, args):
 	try:
 		#Send message of executing command   
 		cid = update.message.chat_id
