@@ -99,7 +99,7 @@ def call_to_action(bot, game):
 def handle_action(bot, update):
     callback = update.callback_query
     log.info('handle_action called: %s' % callback.data)
-    regex = re.search("(-[0-9]*)_action_([0-9]*)", callback.data)
+    regex = re.search("(-[0-9]*)_action_(.*)", callback.data)
     cid = int(regex.group(1))
     answer = regex.group(2)
     strcid = regex.group(1)
