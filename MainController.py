@@ -108,7 +108,7 @@ def handle_action(bot, update):
         uid = callback.from_user.id
         
         bot.edit_message_text("Has elegido la accion %s" % (answer), uid, callback.message.message_id)
-        log.info("Player %s (%d) voted %s" % (callback.from_user.first_name, uid, answer))
+        log.info("El jugador %s (%d) eligio la acción %s" % (callback.from_user.first_name, uid, answer))
         
         #if uid not in game.board.state.last_votes:
         game.board.state.last_votes[uid] = answer
@@ -121,12 +121,11 @@ def handle_action(bot, update):
                 btns.append([InlineKeyboardButton("%s (%s)" % (actionid, costo), callback_data=strcid + "_action_" + comando)])        
         
         voteMarkup = InlineKeyboardMarkup(btns)
-        
-        for uid in game.playerlist:
-                if not debugging:
-                        bot.send_message(uid, "Podes cambiar tu accion aca.\n¿Cuál acción desea realizar?", reply_markup=voteMarkup)
-                else:
-                        bot.send_message(ADMIN, "Podes cambiar tu accion aca.\n¿Cuál acción desea realizar?", reply_markup=voteMarkup)
+                
+        if not debugging:
+                bot.send_message(uid, "Podes cambiar tu accion aca.\n¿Cuál acción desea realizar?", reply_markup=voteMarkup)
+        else:
+                bot.send_message(ADMIN, "Podes cambiar tu accion aca.\n¿Cuál acción desea realizar?", reply_markup=voteMarkup)
         
         #Commands.save_game(game.cid, "Saved Round %d" % (game.board.state.currentround), game)
         if len(game.board.state.last_votes) == len(game.player_sequence):
