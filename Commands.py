@@ -469,7 +469,8 @@ def command_infect(bot, update, args):
 			game = GamesController.games.get(cid, None)
 			
 			if len(args) > 0:
-				uid = find_key(game.player_sequence, args[0])
+				uid = next((k for k, v in game.player_sequence.items() if v.args[0] == args[0]), None)
+				bot.send_message(cid, "ID del jugador %i " % (uid) 
 				if uid:
 					if len(args) > 1
 						try:							
