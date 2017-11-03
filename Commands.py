@@ -152,7 +152,7 @@ def command_newgame(bot, update):
 			if game:
 				GamesController.games[cid] = game
 				bot.send_message(cid, "There is currently a game running. If you want to end it please type /cancelgame!")				
-				bot.send_message(cid, game.board.print_board(game.player_sequence))				
+				bbot.send_message(game.cid, game.board.print_board(game.playerlist))				
 				# Ask the president to choose a chancellor
 				''' 
 				
