@@ -736,7 +736,7 @@ def inform_cultist(bot, game, player_number):
                         
                         if not debugging:
                                 bot.send_message(uid, "El/los jugador/es poseido/s es/son: %s" % fstring)    
-                        else
+                        else:
                                 bot.send_message(ADMIN, "El/los jugador/es poseido/s es/son: %s" % fstring)  
                                 
                         if player_number > 5:
