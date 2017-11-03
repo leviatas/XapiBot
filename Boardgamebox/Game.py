@@ -26,12 +26,19 @@ class Game(object):
                 return self.playerlist[uid]
 
     def get_cultist(self):
-        fascists = []
+        cultistas = []
         for uid in self.playerlist:
             if self.playerlist[uid].role == "Cultista":
-                fascists.append(self.playerlist[uid])
-        return fascists
+                cultistas.append(self.playerlist[uid])
+        return cultistas
 
+    def get_poseidos(self):
+        poseidos = []
+        for uid in self.playerlist:
+            if self.playerlist[uid].poseido:
+                poseidos.append(self.playerlist[uid])
+        return poseidos
+    
     def shuffle_player_sequence(self):
         for uid in self.playerlist:
             self.player_sequence.append(self.playerlist[uid])
